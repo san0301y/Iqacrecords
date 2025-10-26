@@ -71,6 +71,10 @@ app.get('/api/faculty', async (req, res) => {
     `;
     
     const result = await client.query(sql);
+    if (result.rows.length === 0) {
+      console.log('⚠️ No faculty members found in the database');
+      return res.status(404).json({ error: 'No faculty members found' });
+    }
     console.log(`✅ Sent ${result.rows.length} faculty members with iqac_record counts`);
     res.json(result.rows);
   } catch (err) {
